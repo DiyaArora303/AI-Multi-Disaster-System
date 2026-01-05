@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend.Dockerfile
+    container_name: disasters_backend
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:Diya30@db:5432/disasters
+      SECRET_KEY: supersecretkey123456789
+      EMAIL_FROM: alerts@example.com
+      SMS_PROVIDER_API_KEY: testkey123
+      FRONTEND_BASE_URL: http://localhost:3000
+    ports:
+      - "8000:8000"
+    command: uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
+
+  db:
+    image: postgres:15
+    container_name: disasters_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "Diya30"
+      POSTGRES_DB: disasters
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

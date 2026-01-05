@@ -1,0 +1,211 @@
+/* frontend/src/index.css */
+
+/* --- 1. Font Imports --- */
+/* CRITICAL: Ensure this is the first item after the @tailwind directives */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* --- 2. Tailwind Directives --- */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- 3. Base Layer: CSS Variables and Global Resets --- */
+@layer base {
+  :root {
+    /* Base Colors - Tailwind standard HSL values for Dark Theme */
+    --background: 222 47% 6%;
+    --foreground: 210 40% 98%;
+
+    /* Card/Popover Colors */
+    --card: 222 47% 8%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Primary/Accent Colors (Teal/Cyan for primary AI look) */
+    --primary: 186 100% 50%;
+    --primary-foreground: 222 47% 6%;
+    --secondary: 222 47% 12%;
+    --secondary-foreground: 210 40% 98%;
+    --accent: 186 100% 50%;
+    --accent-foreground: 222 47% 6%;
+
+    /* UI/State Colors */
+    --muted: 222 47% 15%;
+    --muted-foreground: 215 20% 55%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 222 47% 18%;
+    --input: 222 47% 15%;
+    --ring: 186 100% 50%;
+
+    --radius: 0.75rem;
+
+    /* Custom disaster severity colors (Used for maps and badges) */
+    --risk-critical: 0 84% 55%;
+    --risk-high: 25 95% 53%;
+    --risk-moderate: 45 93% 47%;
+    --risk-low: 142 71% 45%;
+    --risk-safe: 160 84% 39%;
+
+    /* Glow effects */
+    --glow-cyan: 0 0 20px hsl(186 100% 50% / 0.4);
+    --glow-red: 0 0 20px hsl(0 84% 55% / 0.5);
+    --glow-orange: 0 0 20px hsl(25 95% 53% / 0.4);
+    --glow-yellow: 0 0 20px hsl(45 93% 47% / 0.4);
+    --glow-green: 0 0 20px hsl(142 71% 45% / 0.4);
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(186 100% 50%), hsl(200 100% 45%));
+    --gradient-danger: linear-gradient(135deg, hsl(0 84% 55%), hsl(25 95% 53%));
+    --gradient-warning: linear-gradient(135deg, hsl(25 95% 53%), hsl(45 93% 47%));
+    --gradient-dark: linear-gradient(180deg, hsl(222 47% 8%), hsl(222 47% 4%));
+    --gradient-card: linear-gradient(145deg, hsl(222 47% 10%), hsl(222 47% 6%));
+
+    /* Sidebar Variables (Specific to the layout) */
+    --sidebar-background: 222 47% 8%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 186 100% 50%;
+    --sidebar-primary-foreground: 222 47% 6%;
+    --sidebar-accent: 222 47% 15%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 222 47% 18%;
+    --sidebar-ring: 186 100% 50%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* --- 4. Components Layer: Custom UI Classes --- */
+@layer components {
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-xl border border-border/50 rounded-xl;
+    background: linear-gradient(145deg, hsl(222 47% 10% / 0.8), hsl(222 47% 6% / 0.9));
+  }
+
+  /* Glow utility classes */
+  .glow-primary { box-shadow: var(--glow-cyan); }
+  .glow-danger { box-shadow: var(--glow-red); }
+  .glow-warning { box-shadow: var(--glow-orange); }
+  .glow-success { box-shadow: var(--glow-green); }
+
+  /* Text Gradient Classes */
+  .text-gradient-primary {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+  .text-gradient-danger {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-danger);
+  }
+  
+  /* Disaster Risk Badges */
+  .risk-badge-critical {
+    @apply bg-[hsl(var(--risk-critical))] text-white px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider;
+    box-shadow: var(--glow-red);
+  }
+  .risk-badge-high {
+    @apply bg-[hsl(var(--risk-high))] text-white px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider;
+    box-shadow: var(--glow-orange);
+  }
+  .risk-badge-moderate {
+    @apply bg-[hsl(var(--risk-moderate))] text-background px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider;
+    box-shadow: var(--glow-yellow);
+  }
+  .risk-badge-low {
+    @apply bg-[hsl(var(--risk-low))] text-white px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider;
+    box-shadow: var(--glow-green);
+  }
+
+  .stat-card {
+    @apply glass-card p-4 relative overflow-hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    @apply absolute inset-0 opacity-10;
+    background: radial-gradient(circle at top right, hsl(186 100% 50%), transparent 70%);
+  }
+
+  .pulse-dot { @apply relative; }
+  .pulse-dot::after {
+    content: '';
+    @apply absolute inset-0 rounded-full animate-ping;
+    background: inherit;
+    opacity: 0.5;
+  }
+  
+  /* Animation classes */
+  .scanner-line {
+    @apply absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent;
+    animation: scan 3s linear infinite;
+  }
+  @keyframes scan {
+    0% { top: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
+  .alert-pulse { animation: alertPulse 2s ease-in-out infinite; }
+  @keyframes alertPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  .map-container { @apply rounded-xl overflow-hidden border border-border/50; }
+
+  .data-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+}
+
+/* --- 5. Utilities Layer: Scrollbar Customization --- */
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--primary) / 0.3) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar { width: 6px; }
+  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.3);
+    border-radius: 3px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.5);
+  }
+}
+
+/* --- LEAFLET CRITICAL RENDERING FIXES --- */
+.leaflet-container {
+  height: 600px !important;
+  width: 100% !important;
+  z-index: 1 !important;
+  background-color: #020617 !important;
+}
+
+.leaflet-pane { z-index: 400 !important; }
+.leaflet-overlay-pane { z-index: 401 !important; }
+
+.leaflet-popup-content-wrapper {
+  background: #0f172a !important;
+  color: white !important;
+  border: 1px solid #1e293b;
+  border-radius: 8px !important;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.leaflet-popup-tip { background: #0f172a !important; }

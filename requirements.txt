@@ -1,0 +1,15 @@
+earthengine-api
+pandas
+numpy
+geopandas
+rasterio
+requests
+matplotlib
+tensorflow
+scikit-learn
+xgboost
+fastapi
+uvicorn
+python-dotenv
+folium
+shapely
