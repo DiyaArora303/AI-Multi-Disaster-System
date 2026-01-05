@@ -1,11 +1,13 @@
 import React from 'react';
 import { AlertCircle, Zap, Radio, Bell, Play } from 'lucide-react';
 import { toast } from 'sonner';
+import { API_BASE } from '@/config/api';
 
 const QuickActions = () => {
   const dispatchAlert = async (level: string, message: string) => {
     try {
-      const response = await fetch('http://localhost:8000/api/trigger_alert', {
+      // ✅ UPDATED: Uses Config URL
+      const response = await fetch(`${API_BASE}/api/trigger_alert`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ level, message }),
@@ -22,7 +24,8 @@ const QuickActions = () => {
 
   const toggleSimMode = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/toggle_simulation", {
+      // ✅ UPDATED: Uses Config URL
+      const res = await fetch(`${API_BASE}/api/toggle_simulation`, {
         method: "POST",
       });
       const json = await res.json();

@@ -1,6 +1,8 @@
-// Backend API Configuration
-// Change this to your actual backend URL when deploying
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+// frontend/src/config/api.ts
+
+export const API_BASE = 
+  import.meta.env.VITE_API_URL || 
+  "https://ai-multi-disaster-prediction-system.onrender.com";
 
 export const API_ENDPOINTS = {
   // Predictions

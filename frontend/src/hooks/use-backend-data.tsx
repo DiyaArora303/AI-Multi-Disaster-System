@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_BASE } from '@/config/api';
 
 export function useBackendData() {
   const [data, setData] = useState({
@@ -10,7 +11,7 @@ export function useBackendData() {
       ai_accuracy_percent: 94.2 
     },
     heatmap: [],
-    warroom_ticker: [], // ✅ ADDED (no existing field changed)
+    warroom_ticker: [], 
     activeThreats: [], 
     loading: true, 
     isConnected: false, 
@@ -19,14 +20,15 @@ export function useBackendData() {
 
   const fetchUpdate = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/predict_all/stats");
+      // ✅ UPDATED: Uses Config URL
+      const res = await fetch(`${API_BASE}/api/predict_all/stats`);
       if (!res.ok) throw new Error("Connection failed");
       const json = await res.json();
 
       setData({
         stats: json.stats,
         heatmap: json.heatmap || [],
-        warroom_ticker: json.warroom_ticker || [], // ✅ ADDED mapping only
+        warroom_ticker: json.warroom_ticker || [],
         activeThreats: json.activeThreats || [],
         loading: false,
         isConnected: true,

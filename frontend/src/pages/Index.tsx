@@ -6,6 +6,7 @@ import IndiaMap from '@/components/map/IndiaMap';
 import QuickActions from '@/components/dashboard/QuickActions';
 import { Activity, Clock, Zap, X, ShieldAlert } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { API_BASE } from '@/config/api';
 
 const Index = () => {
   const { stats, heatmap, warroom_ticker, isConnected } = useBackendData();
@@ -20,7 +21,8 @@ const Index = () => {
     setLoadingAI(true);
     setAiIntel("DECRYPTING NEURAL LINK...");
     try {
-      const res = await fetch("http://localhost:8000/api/ai_briefing", {
+      // ✅ UPDATED: Uses Config URL
+      const res = await fetch(`${API_BASE}/api/ai_briefing`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(hazard),
