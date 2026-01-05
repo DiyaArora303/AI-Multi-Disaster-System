@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+
+# Virtual environments
+venv/
+.venv/
+.venv*/
+
+# ML / Data
+*.npy
+*.pkl
+*.h5
+*.csv
+*.tif
+
+data_pipeline/
+ml_models/
+backend/models/
+
+# Node
+node_modules/
+
+# Build
+dist/
+build/
