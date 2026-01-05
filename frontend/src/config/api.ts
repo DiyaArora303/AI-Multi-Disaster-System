@@ -1,8 +1,6 @@
-// frontend/src/config/api.ts
-
 export const API_BASE = 
   import.meta.env.VITE_API_URL || 
-  "https://ai-multi-disaster-prediction-system.onrender.com";
+  "https://ai-multi-disaster-predicition-system.onrender.com"; // ✅ Matches your browser
 
 export const API_ENDPOINTS = {
   // Predictions
